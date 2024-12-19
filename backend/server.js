@@ -6,6 +6,8 @@ const express = require('express');
 // Import des routes pour les connexions
 const registerRoutes = require('./routes/registerRoutes');
 const longinRoutes = require('./routes/loginRoutes');
+const projectRoutes = require('./routes/Projet');
+const tasksRoutes = require('./routes/Task');
 
 // Utilisation de express le classique pour monter notre app
 const app = express();
@@ -15,6 +17,10 @@ app.use(bodyParser.json());
 // Utilisation des routes créer en amont
 app.use('/register', registerRoutes);
 app.use('/login', longinRoutes);
+// Rooute pour les projets
+app.use('/projects', projectRoutes);
+// Rooute pour les task
+app.use('/task', tasksRoutes);
 
 // Lancement de notre serveur
 app.listen(3000, () => {
