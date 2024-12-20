@@ -32,7 +32,10 @@ router.post('/', (req, res) => {
         }
         // On génére une session de 1h avec le jwt
         const token = jwt.sign({id: user.id, role: user.role}, JWT_SECRET, {expiresIn: '1h'});
-        res.json({ message: 'Connexion done', token});
+        res.json({ message: 'Connexion done',
+            token,
+            user,
+        });
     });
 });
 

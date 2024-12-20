@@ -52,10 +52,11 @@
           
           // Si 200 alors Enregistrer le token et les infos de l'utilisateur dans Pinia
           if (response.status === 200) {
+            console.log(response.data.user)
             authStore.setUser(response.data.user)
             authStore.setToken(response.data.token)
             // Rediriger vers la page d'accueil ou tableau de bord
-            router.push('/')
+            router.push('/taskboard')
           }
   
         } catch (error) {

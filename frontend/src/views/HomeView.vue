@@ -1,12 +1,20 @@
 <template>
   <div id="app">
-    <h1 v-if="authStore.user">Bienvenue, {{ authStore.user.username }}!</h1>
-    <h1 v-else>
-      <i class="fa fa-user"></i>
-      Connecte-toi pour continuer !
-    </h1>
-    <login-component>
-    </login-component>
+    <div v-if="authStore.user">
+      <h1 >Bienvenue, {{ authStore.user.username }}!</h1>
+      <h3>
+        Consulté mon tableau => 
+        <router-link to="/taskboard">Mon Taskboard</router-link>
+      </h3>
+    </div>
+    <div v-else>
+      <h1>
+        <i class="fa fa-user"></i>
+        Connecte-toi pour continuer !
+      </h1>
+      <login-component>
+      </login-component>
+    </div>
     
   </div>
 </template>

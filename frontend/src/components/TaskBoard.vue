@@ -1,9 +1,20 @@
 <template>
-    <div class="taskboard">
+  <div>
+    <div class="taskboard" v-if="authStore.user">
       <h1>Bienvenue, {{ authStore.user.username }}!</h1>
       <span class="badge">{{ authStore.user.role }}</span>
-  
+
+      <br>
+      <button v-if="authStore.user && authStore.user.role === 'manager'" @click="openPopup" class="btn-create-project">
+        Créer un projet
+      </button>
+      <br>
+
       <div class="board">
+        <!-- Afficher la pop-up de création de projet si openPopup est true -->
+        <CreateProjectPopup v-if="isPopupOpen" @close="closePopup"
+        :user="authStore.user" />
+
         <div v-for="day in days" :key="day" class="day-column">
           <h2>{{ day }}</h2>
           <div v-if="loading" class="loading">Chargement...</div>
@@ -20,21 +31,40 @@
         </div>
       </div>
     </div>
+    <div class="v-else">
+      <router-link to="/">TaskBoard non trouvé ! Connecte toi</router-link>
+    </div>
+  </div>
   </template>
   
   <script>
   import { ref, onMounted, computed } from 'vue'
   import { useAuthStore } from '../store/authStore'
+  import CreateProjectPopup from './popUp/CreateProjectPopUp'
   import axios from 'axios'
   
   export default {
+    components: {
+      CreateProjectPopup
+    },
     setup() {
       const authStore = useAuthStore()
       const projects = ref([])
       const loading = ref(true)
-  
+      const isPopupOpen = ref(false);
+
+
       const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
-  
+      
+      // Fcntion pour ouvrir et fermer la pop-up
+      const openPopup = () => {
+        isPopupOpen.value = true;
+      };
+
+      const closePopup = () => {
+        isPopupOpen.value = false;
+      };
+
       // Récupérer tous les projets
       // Par soucis de temps et comme le projet n'est pas grand je n'utilise pas de store project pour le moment 
       const fetchProjects = async () => {
@@ -69,7 +99,10 @@
         days,
         groupedProjects,
         loading,
-        formatDate
+        formatDate,
+        isPopupOpen,
+        openPopup,
+        closePopup
       }
     }
   }
@@ -83,6 +116,19 @@
   
   h1 {
     text-align: center;
+  }
+
+  .btn-create-project {
+    padding: 10px 20px;
+    background-color: #3997a3;
+    color: white;
+    border: none;
+    display: flex;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
   }
   
   .badge {
