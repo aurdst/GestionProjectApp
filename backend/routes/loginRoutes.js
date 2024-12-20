@@ -5,7 +5,7 @@ const db = require('../bdd/db'); // Connexion à la BDD com' d'hab
 require('dotenv').config();
 
 const router = express.Router();
-const SECRET_KEY = process.env.SECRET_KEY; // charger cette clé secrète selon votre config
+const JWT_SECRET = process.env.JWT_SECRET ; // charger cette clé secrète selon votre config
 
 router.post('/', (req, res) => {
     const { username, password } = req.body;
@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
             return res.status(401).json({ message: 'Mdp incorrect pélo'});
         }
         // On génére une session de 1h avec le jwt
-        const token = jwt.sign({id: user.id, role: user.role}, SECRET_KEY, {expiresIn: '1h'});
+        const token = jwt.sign({id: user.id, role: user.role}, JWT_SECRET, {expiresIn: '1h'});
         res.json({ message: 'Connexion done', token});
     });
 });

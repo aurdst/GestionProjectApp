@@ -28,6 +28,56 @@ router.post('/create', async (req, res) => {
     }
 });
 
+// Récupérer tous les projets pélitto
+// router.get('/getAll', async (req, res) => {
+//     const query = `SELECT * FROM Project`;
+
+//     try {
+//         db.query(query, (err, results) => {
+//             if (err) {
+//                 console.error(err);
+//                 return res.status(500).json({ message: 'Erreur lors de la récupération des projets' });
+//             }
+            
+//             if (results.length === 0) {
+//                 return res.status(404).json({ message: 'Aucun projet trouvé' });
+//             }
+//             console.log(results)
+//             res.json(results); // Renvoie tous les projets d'la bdd man
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Une erreur est survenue' });
+//     }
+// });
+
+// // Récupérer un projet par son ID
+// router.get('/getById/:projectId', async (req, res) => {
+//     const { projectId } = req.params;
+
+//     const query = `SELECT * FROM Project WHERE projectId = ?`;
+
+//     try {
+//         db.query(query, [projectId], (err, result) => {
+//             if (err) {
+//                 console.error(err);
+//                 return res.status(500).json({ message: 'Erreur lors de la récupération du projet' });
+//             }
+
+//             if (result.length === 0) {
+//                 return res.status(404).json({ message: 'Projet non trouvé' });
+//             }
+//             console.log(result)
+//             res.json(result[0]); // Renvoie le projet trouvé
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Une erreur est survenue' });
+//     }
+// });
+
+
+
 // Metre à jour un projet
 router.put('/updated/:projectId', async (req, res) => {
     const { projectId } = req.params;

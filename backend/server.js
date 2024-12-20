@@ -2,6 +2,7 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
+require('dotenv').config()
 
 // Import des routes pour les connexions
 const registerRoutes = require('./routes/registerRoutes');
